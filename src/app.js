@@ -27,6 +27,9 @@ const App = () => {
     const [answers, setAnswers] = useState([]);
     //Number that represents the number of correct answers of the user
     const [correctAnswersCounter, setCorrectAnswersCounter] = useState(0);
+    //Boolean to true if the user answer incorrectly
+    const [gameOver, setGameOver] = useState(false);
+
 
     //Server State
     const [countries, setCountries] = useState([]);
@@ -89,19 +92,23 @@ const App = () => {
                 setCorrectAnswersCounter(correctAnswersCounter + 1);
                 //Generates a new question and answsers
             } else {
-                //Redirect to the result page
-
-                //Display the number of correct answers
-                console.log('mauvaise réponse');
+                //The user answer incorrectly and the game is over
+                setGameOver(true);
             }
         }
     }, [selectedAnswer]);
 
-    //Event handlers for change on the fieldset
+    //Event handler for change on the fieldset
     function answerChange(e) {
         setSelectedAnswer(e.target.value);
         //Reset the checked attrubute of the radio button
         e.target.checked = false;
+    }
+
+    //Event handler for reset the quiz
+    function resetQuiz() {
+        setCorrectAnswersCounter(0);
+        setGameOver(false);
     }
 
 
@@ -124,7 +131,8 @@ const App = () => {
                                         answers.map((answer, index) => {
                                             return (
                                                 <div key={index}>
-                                                    <input type="radio" id={answer} name="answer" value={answer} />
+                                                    {/* disabled = gameOver => means that until the game is not over (gameOver is false), the disbled attribute is at false too  */}
+                                                    <input type="radio" id={answer} name="answer" value={answer} disabled={gameOver} />
                                                     <label htmlFor={answer}>{answer}</label>
                                                 </div>
                                             )
@@ -132,9 +140,14 @@ const App = () => {
                                         : null
                                     }
                                 </fieldset>
-                                <button>
-                                    <Link to="/result">Next</Link>
-                                </button>
+                                {gameOver ?
+                                    <button>
+                                        <Link to="/result">Next</Link>
+                                    </button>
+                                    :
+                                    null
+                                }
+
                             </div>
                         </div>
                     </Route>
@@ -143,7 +156,7 @@ const App = () => {
                             <h2>Results</h2>
                             <p>You got {correctAnswersCounter} correct answers</p>
                             <button>
-                                <Link to="/">Try again</Link>
+                                <Link to="/" onClick={resetQuiz}>Try again</Link>
                             </button>
                         </div>
                     </Route>
