@@ -49,7 +49,6 @@ const App = () => {
 
     //Side effect sync with the countries state
     useEffect(() => {
-        console.log(correctAnswersCounter);
         if (countries.length) {
             //Generate an index between 0 and countries length
             const index = Math.floor(Math.random() * countries.length);
