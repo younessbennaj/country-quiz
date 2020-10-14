@@ -52,6 +52,14 @@ const App = () => {
         setSelectedAnswer(e.target.value);
     }
 
+    //Generate a country to fill the question
+    function generateQuestion() {
+        //Generate an index between 0 and countries length
+        const index = Math.floor(Math.random() * countries.length);
+        console.log(countries[index]);
+        return `${countries[index].capital} is the capital of`;
+    }
+
 
     return (
         <div className="container">
@@ -61,6 +69,7 @@ const App = () => {
                 <div className="quiz-widget">
                     {/* Dynamic */}
                     <p className="quiz-widget__question">
+                        {countries.length ? generateQuestion() : null}
                     </p>
                     <fieldset onChange={answerChange}>
                         {/* Dynamic */}
