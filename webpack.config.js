@@ -1,9 +1,14 @@
 const path = require("path");
 
 module.exports = {
-    mode: "production",
+    mode: "development",
+    devtool: 'inline-source-map',
+    devServer: {
+        contentBase: './dist',
+    },
     entry: "./src/index.js",
     output: {
+        //need an absolute path
         path: path.resolve(__dirname, "dist"),
         filename: "bundle.js"
     },
@@ -15,7 +20,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', "@babel/preset-react"]
+                        presets: ['@babel/preset-react']
                     }
                 }
             }
