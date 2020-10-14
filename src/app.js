@@ -8,6 +8,8 @@ import {
     Link
 } from "react-router-dom";
 
+import winningImage from "../assets/win.svg";
+
 const apiUrl = 'https://restcountries.eu/rest/v2/';
 
 //Set a default base Url
@@ -153,18 +155,19 @@ const App = () => {
                         </Route>
                         <Route exact path="/result" >
                             <div className="result-widget">
+                                <img src={winningImage} alt="Your score" />
                                 <h2>Results</h2>
                                 <p>You got <span>{correctAnswersCounter}</span> correct answers</p>
-                                    <button>
-                                        <Link to="/" onClick={resetQuiz}>Try again</Link>
-                                    </button>
+                                <button>
+                                    <Link to="/" onClick={resetQuiz}>Try again</Link>
+                                </button>
                             </div>
                         </Route>
-                            </div>
+                    </div>
                 </Switch>
             </Router>
         </div>
-                )
-            }
-            
+    )
+}
+
 export default App;
