@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+//React router
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 const apiUrl = 'https://restcountries.eu/rest/v2/';
 
@@ -20,6 +27,9 @@ const App = () => {
     const [answers, setAnswers] = useState([]);
     //Number that represents the number of correct answers of the user
     const [correctAnswersCounter, setCorrectAnswersCounter] = useState(0);
+    //Boolean to true if the user answer incorrectly
+    const [gameOver, setGameOver] = useState(false);
+
 
     //Server State
     const [countries, setCountries] = useState([]);
@@ -82,52 +92,76 @@ const App = () => {
                 setCorrectAnswersCounter(correctAnswersCounter + 1);
                 //Generates a new question and answsers
             } else {
-                //Redirect to the result page
-
-                //Display the number of correct answers
-                console.log('mauvaise réponse');
+                //The user answer incorrectly and the game is over
+                setGameOver(true);
             }
         }
     }, [selectedAnswer]);
 
-    //Event handlers for change on the fieldset
+    //Event handler for change on the fieldset
     function answerChange(e) {
         setSelectedAnswer(e.target.value);
         //Reset the checked attrubute of the radio button
         e.target.checked = false;
     }
 
+    //Event handler for reset the quiz
+    function resetQuiz() {
+        setCorrectAnswersCounter(0);
+        setGameOver(false);
+    }
+
 
     return (
         <div className="container">
-            <div className="quiz-container">
-                {/* Static */}
-                <h2>country quiz</h2>
-                <div className="quiz-widget">
-                    {/* Dynamic */}
-                    <p className="quiz-widget__question">
-                        {question}
-                    </p>
-                    <fieldset onChange={answerChange}>
-                        {/* Dynamic */}
-                        {answers.length ?
-                            answers.map((answer, index) => {
-                                return (
-                                    <div key={index}>
-                                        <input type="radio" id={answer} name="answer" value={answer} />
-                                        <label htmlFor={answer}>{answer}</label>
-                                    </div>
-                                )
-                            })
-                            : null
-                        }
-                    </fieldset>
-                </div>
-            </div>
-            <div className="result-container">
-                <h2>Results</h2>
-                <p>You got {correctAnswersCounter} correct answers</p>
-            </div>
+            <Router>
+                <Switch>
+                    <Route exact path="/">
+                        <div className="quiz-container">
+                            {/* Static */}
+                            <h2>country quiz</h2>
+                            <div className="quiz-widget">
+                                {/* Dynamic */}
+                                <p className="quiz-widget__question">
+                                    {question}
+                                </p>
+                                <fieldset onChange={answerChange}>
+                                    {/* Dynamic */}
+                                    {answers.length ?
+                                        answers.map((answer, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    {/* disabled = gameOver => means that until the game is not over (gameOver is false), the disbled attribute is at false too  */}
+                                                    <input type="radio" id={answer} name="answer" value={answer} disabled={gameOver} />
+                                                    <label htmlFor={answer}>{answer}</label>
+                                                </div>
+                                            )
+                                        })
+                                        : null
+                                    }
+                                </fieldset>
+                                {gameOver ?
+                                    <button>
+                                        <Link to="/result">Next</Link>
+                                    </button>
+                                    :
+                                    null
+                                }
+
+                            </div>
+                        </div>
+                    </Route>
+                    <Route exact path="/result" >
+                        <div className="result-container">
+                            <h2>Results</h2>
+                            <p>You got {correctAnswersCounter} correct answers</p>
+                            <button>
+                                <Link to="/" onClick={resetQuiz}>Try again</Link>
+                            </button>
+                        </div>
+                    </Route>
+                </Switch>
+            </Router>
         </div>
     )
 }
