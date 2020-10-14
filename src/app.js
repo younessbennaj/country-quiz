@@ -132,6 +132,9 @@ const App = () => {
                                         : null
                                     }
                                 </fieldset>
+                                <button>
+                                    <Link to="/result">Next</Link>
+                                </button>
                             </div>
                         </div>
                     </Route>
@@ -139,6 +142,9 @@ const App = () => {
                         <div className="result-container">
                             <h2>Results</h2>
                             <p>You got {correctAnswersCounter} correct answers</p>
+                            <button>
+                                <Link to="/">Try again</Link>
+                            </button>
                         </div>
                     </Route>
                 </Switch>
