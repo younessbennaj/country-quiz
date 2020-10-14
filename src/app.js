@@ -13,6 +13,7 @@ const apiUrl = 'https://restcountries.eu/rest/v2/';
 //Set a default base Url
 axios.defaults.baseURL = apiUrl;
 
+
 const App = () => {
 
     //UI State
@@ -119,21 +120,21 @@ const App = () => {
                     <Route exact path="/">
                         <div className="quiz-container">
                             {/* Static */}
-                            <h2>country quiz</h2>
+                            <h2 className="quiz-container__title">country quiz</h2>
                             <div className="quiz-widget">
                                 {/* Dynamic */}
                                 <p className="quiz-widget__question">
                                     {question}
                                 </p>
-                                <fieldset onChange={answerChange}>
+                                <fieldset className="quiz-widget__answers" onChange={answerChange}>
                                     {/* Dynamic */}
                                     {answers.length ?
                                         answers.map((answer, index) => {
                                             return (
-                                                <div key={index}>
+                                                <div key={index} className="quiz-widget__answer">
                                                     {/* disabled = gameOver => means that until the game is not over (gameOver is false), the disbled attribute is at false too  */}
-                                                    <input type="radio" id={answer} name="answer" value={answer} disabled={gameOver} />
-                                                    <label htmlFor={answer}>{answer}</label>
+
+                                                    <label className="quiz-widget__checkbox" htmlFor={answer}><input type="radio" id={answer} name="answer" value={answer} disabled={gameOver} /><span>{answer}</span></label>
                                                 </div>
                                             )
                                         })
@@ -141,7 +142,7 @@ const App = () => {
                                     }
                                 </fieldset>
                                 {gameOver ?
-                                    <button>
+                                    <button className="quiz-widget__button">
                                         <Link to="/result">Next</Link>
                                     </button>
                                     :
