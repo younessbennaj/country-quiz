@@ -6,49 +6,20 @@ const apiUrl = 'https://restcountries.eu/rest/v2/';
 //Set a default base Url
 axios.defaults.baseURL = apiUrl;
 
-//Mock API 
-const countriesModel = [
-    {
-        "name": "Afghanistan",
-        "capital": "Kabul"
-    },
-    {
-        "name": "Åland Islands",
-        "capital": "Mariehamn"
-    },
-    {
-        "name": "Albania",
-        "capital": "Tirana"
-    },
-    {
-        "name": "Algeria",
-        "capital": "Algiers"
-    },
-    {
-        "name": "American Samoa",
-        "capital": "Pago Pago"
-    },
-    {
-        "name": "Andorra",
-        "capital": "Andorra la Vella"
-    },
-    {
-        "name": "Angola",
-        "capital": "Luanda"
-    },
-    {
-        "name": "Anguilla",
-        "capital": "The Valley"
-    }
-]
-
 const App = () => {
 
     //UI State
+
+    //String that represents the current question asked to the user
     const [question, setQuestion] = useState("");
+    //String that represents the answer selected by the user
     const [selectedAnswer, setSelectedAnswer] = useState("");
+    //String that represents the correct answer to the current question 
     const [correctAnswer, setCorrectAnswer] = useState("");
+    //Array that contains the possible answers to the question, only one is the correct
     const [answers, setAnswers] = useState([]);
+    //Number that represents the number of correct answers of the user
+    const [correctAnswersCounter, setCorrectAnswersCounter] = useState(0);
 
     //Server State
     const [countries, setCountries] = useState([]);
@@ -65,6 +36,7 @@ const App = () => {
 
     //Side effect sync with the countries state
     useEffect(() => {
+        console.log(correctAnswersCounter);
         if (countries.length) {
             //Generate an index between 0 and countries length
             const index = Math.floor(Math.random() * countries.length);
@@ -73,7 +45,7 @@ const App = () => {
             //Store the correct answer in the local state of the app
             setCorrectAnswer(countries[index].name);
         }
-    }, [countries]);
+    }, [countries, correctAnswersCounter]);
 
     //Side effect sync with the correctAnswer state
     useEffect(() => {
@@ -101,9 +73,28 @@ const App = () => {
         }
     }, [correctAnswer]);
 
+    //Side effect sync with selectedAnswer state
+    useEffect(() => {
+        if (selectedAnswer) {
+            //Quiz validation here 
+            if (correctAnswer === selectedAnswer) {
+                //Increment the number of good answers
+                setCorrectAnswersCounter(correctAnswersCounter + 1);
+                //Generates a new question and answsers
+            } else {
+                //Redirect to the result page
+
+                //Display the number of correct answers
+                console.log('mauvaise réponse');
+            }
+        }
+    }, [selectedAnswer]);
+
     //Event handlers for change on the fieldset
     function answerChange(e) {
         setSelectedAnswer(e.target.value);
+        //Reset the checked attrubute of the radio button
+        e.target.checked = false;
     }
 
 
@@ -132,7 +123,10 @@ const App = () => {
                         }
                     </fieldset>
                 </div>
-
+            </div>
+            <div className="result-container">
+                <h2>Results</h2>
+                <p>You got {correctAnswersCounter} correct answers</p>
             </div>
         </div>
     )
