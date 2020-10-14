@@ -1,20 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+//Mock API 
+const countriesModel = [
+    {
+        "name": "Afghanistan",
+        "capital": "Kabul"
+    },
+    {
+        "name": "Åland Islands",
+        "capital": "Mariehamn"
+    },
+    {
+        "name": "Albania",
+        "capital": "Tirana"
+    },
+    {
+        "name": "Algeria",
+        "capital": "Algiers"
+    },
+    {
+        "name": "American Samoa",
+        "capital": "Pago Pago"
+    },
+    {
+        "name": "Andorra",
+        "capital": "Andorra la Vella"
+    },
+    {
+        "name": "Angola",
+        "capital": "Luanda"
+    },
+    {
+        "name": "Anguilla",
+        "capital": "The Valley"
+    }
+]
 
 const App = () => {
 
+    //UI State
     const [selectedAnswer, setSelectedAnswer] = useState("");
+
+    //Server State
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        setCountries(countriesModel);
+    }, []);//no dependencies - called only one tiem
 
     function answerChange(e) {
         setSelectedAnswer(e.target.value);
     }
+
+
     return (
         <div className="container">
             <div className="quiz-container">
+                {/* Static */}
                 <h2>country quiz</h2>
                 <div className="quiz-widget">
+                    {/* Dynamic */}
                     <p className="quiz-widget__question">
                     </p>
                     <fieldset onChange={answerChange}>
+                        {/* Dynamic */}
                         <div>
                             <input type="radio" id="vietnam" name="answer" value="vietnam" />
                             <label htmlFor="vietnam">vietnam</label>
