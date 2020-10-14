@@ -56,8 +56,19 @@ const App = () => {
     function generateQuestion() {
         //Generate an index between 0 and countries length
         const index = Math.floor(Math.random() * countries.length);
-        console.log(countries[index]);
         return `${countries[index].capital} is the capital of`;
+    }
+
+    //Return an array of possible answers
+    function generateAnswer() {
+        let answers = [];
+        let previousIndex = -1;
+        //Generate 4 indexes
+        for (let i = 0; i < 4; i++) {
+            let index = Math.floor(Math.random() * countries.length);
+            answers.push(`${countries[index].name}`);
+        }
+        return answers;
     }
 
 
@@ -73,22 +84,17 @@ const App = () => {
                     </p>
                     <fieldset onChange={answerChange}>
                         {/* Dynamic */}
-                        <div>
-                            <input type="radio" id="vietnam" name="answer" value="vietnam" />
-                            <label htmlFor="vietnam">vietnam</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="malaysia" name="answer" value="malaysia" />
-                            <label htmlFor="malaysia">malaysia</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="sweden" name="answer" value="sweden" />
-                            <label htmlFor="sweden">sweden</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="austria" name="answer" value="austria" />
-                            <label htmlFor="austria">austria</label>
-                        </div>
+                        {countries.length ?
+                            generateAnswer().map(answer => {
+                                return (
+                                    <div>
+                                        <input type="radio" id={answer} name="answer" value={answer} />
+                                        <label htmlFor={answer}>{answer}</label>
+                                    </div>
+                                )
+                            })
+                            : null
+                        }
                     </fieldset>
                 </div>
 
