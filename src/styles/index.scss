@@ -100,3 +100,51 @@ body {
         }
     }
 }
+
+.result-widget {
+    width: 470px;
+    border-radius: 24px;
+    background: #FFFFFF;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    p {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 27px;
+
+        span {
+            font-size: 32px;
+            font-weight: 500;
+            color: #60BF88;
+        }
+    }
+
+    button {
+        height: 60px;
+        width: 200px;
+        border: 2px solid #1D355D;
+        box-sizing: border-box;
+        border-radius: 12px;
+        background: #fff;
+
+        a {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 27px;
+            color: #1D355D;
+            text-decoration: none;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            
+        }
+    }
+}

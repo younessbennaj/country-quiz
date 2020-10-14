@@ -117,10 +117,10 @@ const App = () => {
         <div className="container">
             <Router>
                 <Switch>
-                    <Route exact path="/">
-                        <div className="quiz-container">
-                            {/* Static */}
-                            <h2 className="quiz-container__title">country quiz</h2>
+                    <div className="quiz-container">
+                        {/* Static */}
+                        <h2 className="quiz-container__title">country quiz</h2>
+                        <Route exact path="/">
                             <div className="quiz-widget">
                                 {/* Dynamic */}
                                 <p className="quiz-widget__question">
@@ -150,21 +150,21 @@ const App = () => {
                                 }
 
                             </div>
-                        </div>
-                    </Route>
-                    <Route exact path="/result" >
-                        <div className="result-container">
-                            <h2>Results</h2>
-                            <p>You got {correctAnswersCounter} correct answers</p>
-                            <button>
-                                <Link to="/" onClick={resetQuiz}>Try again</Link>
-                            </button>
-                        </div>
-                    </Route>
+                        </Route>
+                        <Route exact path="/result" >
+                            <div className="result-widget">
+                                <h2>Results</h2>
+                                <p>You got <span>{correctAnswersCounter}</span> correct answers</p>
+                                    <button>
+                                        <Link to="/" onClick={resetQuiz}>Try again</Link>
+                                    </button>
+                            </div>
+                        </Route>
+                            </div>
                 </Switch>
             </Router>
         </div>
-    )
-}
-
+                )
+            }
+            
 export default App;
