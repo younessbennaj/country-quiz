@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+//React router
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 const apiUrl = 'https://restcountries.eu/rest/v2/';
 
@@ -100,34 +107,42 @@ const App = () => {
 
     return (
         <div className="container">
-            <div className="quiz-container">
-                {/* Static */}
-                <h2>country quiz</h2>
-                <div className="quiz-widget">
-                    {/* Dynamic */}
-                    <p className="quiz-widget__question">
-                        {question}
-                    </p>
-                    <fieldset onChange={answerChange}>
-                        {/* Dynamic */}
-                        {answers.length ?
-                            answers.map((answer, index) => {
-                                return (
-                                    <div key={index}>
-                                        <input type="radio" id={answer} name="answer" value={answer} />
-                                        <label htmlFor={answer}>{answer}</label>
-                                    </div>
-                                )
-                            })
-                            : null
-                        }
-                    </fieldset>
-                </div>
-            </div>
-            <div className="result-container">
-                <h2>Results</h2>
-                <p>You got {correctAnswersCounter} correct answers</p>
-            </div>
+            <Router>
+                <Switch>
+                    <Route exact path="/">
+                        <div className="quiz-container">
+                            {/* Static */}
+                            <h2>country quiz</h2>
+                            <div className="quiz-widget">
+                                {/* Dynamic */}
+                                <p className="quiz-widget__question">
+                                    {question}
+                                </p>
+                                <fieldset onChange={answerChange}>
+                                    {/* Dynamic */}
+                                    {answers.length ?
+                                        answers.map((answer, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <input type="radio" id={answer} name="answer" value={answer} />
+                                                    <label htmlFor={answer}>{answer}</label>
+                                                </div>
+                                            )
+                                        })
+                                        : null
+                                    }
+                                </fieldset>
+                            </div>
+                        </div>
+                    </Route>
+                    <Route exact path="/result" >
+                        <div className="result-container">
+                            <h2>Results</h2>
+                            <p>You got {correctAnswersCounter} correct answers</p>
+                        </div>
+                    </Route>
+                </Switch>
+            </Router>
         </div>
     )
 }
